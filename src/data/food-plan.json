@@ -1,199 +1,248 @@
 {
+  "year": 2026,
   "babyInfo": {
-    "startAgeDays": 203,
-    "endAgeDays": 229,
-    "startDate": "2026-04-04",
-    "note": "4月4日起首次添加辅食，全程细腻泥糊，无盐无糖无蜂蜜，每日1餐（上午），下旬逐步尝试下午少量果泥"
+    "birthDate": "2025-09-14",
+    "note": "辅食日记"
   },
-  "aprilFoodPlan": [
-    {
-      "date": "2026-04-04",
-      "dayDesc": "第1天·初次尝试",
-      "morning": "米粉（稀糊）1-2勺",
-      "afternoon": "无辅食",
-      "tip": "少量尝试，适应勺子和吞咽"
+  "months": {
+    "1": {
+      "monthName": "1月",
+      "plans": []
     },
-    {
-      "date": "2026-04-05",
-      "dayDesc": "第2天·适应米粉",
-      "morning": "米粉（稍稠）",
-      "afternoon": "无辅食",
-      "tip": ""
+    "2": {
+      "monthName": "2月",
+      "plans": []
     },
-    {
-      "date": "2026-04-06",
-      "dayDesc": "第3天·巩固米粉",
-      "morning": "米粉（正常稠度）",
-      "afternoon": "无辅食",
-      "tip": ""
+    "3": {
+      "monthName": "3月",
+      "plans": []
     },
-    {
-      "date": "2026-04-07",
-      "dayDesc": "第4天",
-      "morning": "米粉",
-      "afternoon": "无辅食",
-      "tip": ""
+    "4": {
+      "monthName": "4月",
+      "babyAge": "约6个月20天",
+      "plans": [
+        {
+          "date": "2026-04-04",
+          "dayDesc": "第1天·初次尝试",
+          "morning": "米粉（稀糊）1-2勺",
+          "afternoon": "无辅食",
+          "tip": "少量尝试，适应勺子和吞咽"
+        },
+        {
+          "date": "2026-04-05",
+          "dayDesc": "第2天·适应米粉",
+          "morning": "米粉（稍稠）",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-06",
+          "dayDesc": "第3天·巩固米粉",
+          "morning": "米粉（正常稠度）",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-07",
+          "dayDesc": "第4天",
+          "morning": "米粉",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-08",
+          "dayDesc": "第5天",
+          "morning": "米粉",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-09",
+          "dayDesc": "第6天",
+          "morning": "米粉",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-10",
+          "dayDesc": "第7天",
+          "morning": "米粉",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-11",
+          "dayDesc": "第8天·新加蔬菜：胡萝卜",
+          "morning": "米粉+胡萝卜泥",
+          "afternoon": "无辅食",
+          "tip": "单一新食物，连吃3天观察过敏"
+        },
+        {
+          "date": "2026-04-12",
+          "dayDesc": "第9天·胡萝卜泥",
+          "morning": "米粉+胡萝卜泥",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-13",
+          "dayDesc": "第10天·胡萝卜泥",
+          "morning": "米粉+胡萝卜泥",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-14",
+          "dayDesc": "第11天·新加蔬菜：土豆",
+          "morning": "米粉+土豆泥",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-15",
+          "dayDesc": "第12天·土豆泥",
+          "morning": "米粉+土豆泥",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-16",
+          "dayDesc": "第13天·土豆泥",
+          "morning": "米粉+土豆泥",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-17",
+          "dayDesc": "第14天·新加蔬菜：南瓜",
+          "morning": "米粉+南瓜泥",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-18",
+          "dayDesc": "第15天·南瓜泥",
+          "morning": "米粉+南瓜泥",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-19",
+          "dayDesc": "第16天·南瓜泥",
+          "morning": "米粉+南瓜泥",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-20",
+          "dayDesc": "第17天·新加肉类：猪肉泥（补铁）",
+          "morning": "米粉+猪肉泥（少量）",
+          "afternoon": "无辅食",
+          "tip": "红肉优先补铁，量少为宜"
+        },
+        {
+          "date": "2026-04-21",
+          "dayDesc": "第18天·猪肉泥",
+          "morning": "米粉+猪肉泥",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-22",
+          "dayDesc": "第19天·猪肉泥",
+          "morning": "米粉+猪肉泥",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-23",
+          "dayDesc": "第20天·新加蔬菜：西兰花",
+          "morning": "米粉+西兰花泥",
+          "afternoon": "无辅食",
+          "tip": "西兰花需焯水后打泥"
+        },
+        {
+          "date": "2026-04-24",
+          "dayDesc": "第21天·西兰花泥",
+          "morning": "米粉+西兰花泥",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-25",
+          "dayDesc": "第22天·西兰花泥",
+          "morning": "米粉+西兰花泥",
+          "afternoon": "无辅食",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-26",
+          "dayDesc": "第23天·新加蛋类：1/4蛋黄泥",
+          "morning": "米粉+1/4蛋黄泥",
+          "afternoon": "苹果泥/香蕉泥（少量）",
+          "tip": "首次加蛋黄，从1/4开始尝试"
+        },
+        {
+          "date": "2026-04-27",
+          "dayDesc": "第24天·1/4蛋黄泥",
+          "morning": "米粉+1/4蛋黄泥",
+          "afternoon": "水果泥（少量）",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-28",
+          "dayDesc": "第25天·1/4蛋黄泥",
+          "morning": "米粉+1/4蛋黄泥",
+          "afternoon": "水果泥（少量）",
+          "tip": ""
+        },
+        {
+          "date": "2026-04-29",
+          "dayDesc": "第26天·混合搭配",
+          "morning": "米粉+蔬菜泥+猪肉泥",
+          "afternoon": "水果泥",
+          "tip": "已适应食物可少量混合"
+        },
+        {
+          "date": "2026-04-30",
+          "dayDesc": "第27天·巩固多样化",
+          "morning": "米粉+蛋黄泥",
+          "afternoon": "蔬菜泥/水果泥",
+          "tip": ""
+        }
+      ]
     },
-    {
-      "date": "2026-04-08",
-      "dayDesc": "第5天",
-      "morning": "米粉",
-      "afternoon": "无辅食",
-      "tip": ""
+    "5": {
+      "monthName": "5月",
+      "plans": []
     },
-    {
-      "date": "2026-04-09",
-      "dayDesc": "第6天",
-      "morning": "米粉",
-      "afternoon": "无辅食",
-      "tip": ""
+    "6": {
+      "monthName": "6月",
+      "plans": []
     },
-    {
-      "date": "2026-04-10",
-      "dayDesc": "第7天",
-      "morning": "米粉",
-      "afternoon": "无辅食",
-      "tip": ""
+    "7": {
+      "monthName": "7月",
+      "plans": []
     },
-    {
-      "date": "2026-04-11",
-      "dayDesc": "第8天·新加蔬菜：胡萝卜",
-      "morning": "米粉+胡萝卜泥",
-      "afternoon": "无辅食",
-      "tip": "单一新食物，连吃3天观察过敏"
+    "8": {
+      "monthName": "8月",
+      "plans": []
     },
-    {
-      "date": "2026-04-12",
-      "dayDesc": "第9天·胡萝卜泥",
-      "morning": "米粉+胡萝卜泥",
-      "afternoon": "无辅食",
-      "tip": ""
+    "9": {
+      "monthName": "9月",
+      "plans": []
     },
-    {
-      "date": "2026-04-13",
-      "dayDesc": "第10天·胡萝卜泥",
-      "morning": "米粉+胡萝卜泥",
-      "afternoon": "无辅食",
-      "tip": ""
+    "10": {
+      "monthName": "10月",
+      "plans": []
     },
-    {
-      "date": "2026-04-14",
-      "dayDesc": "第11天·新加蔬菜：土豆",
-      "morning": "米粉+土豆泥",
-      "afternoon": "无辅食",
-      "tip": ""
+    "11": {
+      "monthName": "11月",
+      "plans": []
     },
-    {
-      "date": "2026-04-15",
-      "dayDesc": "第12天·土豆泥",
-      "morning": "米粉+土豆泥",
-      "afternoon": "无辅食",
-      "tip": ""
-    },
-    {
-      "date": "2026-04-16",
-      "dayDesc": "第13天·土豆泥",
-      "morning": "米粉+土豆泥",
-      "afternoon": "无辅食",
-      "tip": ""
-    },
-    {
-      "date": "2026-04-17",
-      "dayDesc": "第14天·新加蔬菜：南瓜",
-      "morning": "米粉+南瓜泥",
-      "afternoon": "无辅食",
-      "tip": ""
-    },
-    {
-      "date": "2026-04-18",
-      "dayDesc": "第15天·南瓜泥",
-      "morning": "米粉+南瓜泥",
-      "afternoon": "无辅食",
-      "tip": ""
-    },
-    {
-      "date": "2026-04-19",
-      "dayDesc": "第16天·南瓜泥",
-      "morning": "米粉+南瓜泥",
-      "afternoon": "无辅食",
-      "tip": ""
-    },
-    {
-      "date": "2026-04-20",
-      "dayDesc": "第17天·新加肉类：猪肉泥（补铁）",
-      "morning": "米粉+猪肉泥（少量）",
-      "afternoon": "无辅食",
-      "tip": "红肉优先补铁，量少为宜"
-    },
-    {
-      "date": "2026-04-21",
-      "dayDesc": "第18天·猪肉泥",
-      "morning": "米粉+猪肉泥",
-      "afternoon": "无辅食",
-      "tip": ""
-    },
-    {
-      "date": "2026-04-22",
-      "dayDesc": "第19天·猪肉泥",
-      "morning": "米粉+猪肉泥",
-      "afternoon": "无辅食",
-      "tip": ""
-    },
-    {
-      "date": "2026-04-23",
-      "dayDesc": "第20天·新加蔬菜：西兰花",
-      "morning": "米粉+西兰花泥",
-      "afternoon": "无辅食",
-      "tip": "西兰花需焯水后打泥"
-    },
-    {
-      "date": "2026-04-24",
-      "dayDesc": "第21天·西兰花泥",
-      "morning": "米粉+西兰花泥",
-      "afternoon": "无辅食",
-      "tip": ""
-    },
-    {
-      "date": "2026-04-25",
-      "dayDesc": "第22天·西兰花泥",
-      "morning": "米粉+西兰花泥",
-      "afternoon": "无辅食",
-      "tip": ""
-    },
-    {
-      "date": "2026-04-26",
-      "dayDesc": "第23天·新加蛋类：1/4蛋黄泥",
-      "morning": "米粉+1/4蛋黄泥",
-      "afternoon": "苹果泥/香蕉泥（少量）",
-      "tip": "首次加蛋黄，从1/4开始尝试"
-    },
-    {
-      "date": "2026-04-27",
-      "dayDesc": "第24天·1/4蛋黄泥",
-      "morning": "米粉+1/4蛋黄泥",
-      "afternoon": "水果泥（少量）",
-      "tip": ""
-    },
-    {
-      "date": "2026-04-28",
-      "dayDesc": "第25天·1/4蛋黄泥",
-      "morning": "米粉+1/4蛋黄泥",
-      "afternoon": "水果泥（少量）",
-      "tip": ""
-    },
-    {
-      "date": "2026-04-29",
-      "dayDesc": "第26天·混合搭配",
-      "morning": "米粉+蔬菜泥+猪肉泥",
-      "afternoon": "水果泥",
-      "tip": "已适应食物可少量混合"
-    },
-    {
-      "date": "2026-04-30",
-      "dayDesc": "第27天·巩固多样化",
-      "morning": "米粉+蛋黄泥",
-      "afternoon": "蔬菜泥/水果泥",
-      "tip": ""
+    "12": {
+      "monthName": "12月",
+      "plans": []
     }
-  ]
+  }
 }

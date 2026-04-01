@@ -4,7 +4,7 @@
 
 :root {
   /* 莫兰迪色板 */
-  --bg-primary: #F7F5F3;        /* 主背景色 - 米灰色/暖灰 */
+  --bg-primary: tranparent;        /* 主背景色 - 米灰色/暖灰 */
   --bg-surface: #FFFFFF;        /* 卡片/容器背景 - 纯白 */
   --bg-surface-alt: #EFECE8;    /* 卡片/容器背景 - 浅灰褐 */
   

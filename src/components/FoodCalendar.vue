@@ -2,7 +2,12 @@
   <div class="food-calendar">
     <!-- 页面标题和导出按钮 -->
     <div class="page-header">
-      <h1 class="page-title zcool-kuaile-regular">乐乐的辅食日记</h1>
+      <button class="back-btn" @click="emit('back-to-home')" title="返回首页">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <h1 class="page-title zcool-kuaile-regular">{{ currentMonthTitle }}</h1>
       <button class="export-btn" @click="exportPDF" title="导出PDF">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -11,13 +16,13 @@
         </svg>
       </button>
     </div>
-    
+
     <!-- 头部信息 -->
-    <div class="calendar-header">
+    <!-- <div class="calendar-header">
       <div class="month-nav">
         <h2 class="month-title nanum-pen-script-regular">{{ currentMonthTitle }}</h2>
       </div>
-    </div>
+    </div> -->
 
     <!-- 星期标题 -->
     <div class="week-header">
@@ -60,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import foodPlanData from '../data/food-plan.json'
 
 interface FoodPlan {
@@ -71,47 +76,81 @@ interface FoodPlan {
   tip: string
 }
 
+interface MonthData {
+  monthName: string
+  plans: FoodPlan[]
+  babyAge?: string
+}
+
+interface MonthMap {
+  [key: string]: MonthData
+}
+
 interface BabyInfo {
-  startAgeDays: number
-  endAgeDays: number
-  startDate: string
+  birthDate: string
   note: string
 }
 
-const babyInfo = foodPlanData.babyInfo as BabyInfo
-const aprilFoodPlan = foodPlanData.aprilFoodPlan as FoodPlan[]
+const props = defineProps<{
+  month?: number
+}>()
+
+const emit = defineEmits<{
+  'back-to-home': []
+}>()
+
+const babyInfo = (foodPlanData as any).babyInfo as BabyInfo
+const monthsData = (foodPlanData as any).months as MonthMap
+
+// 当前显示的月份数据
+const currentMonthData = ref<FoodPlan[]>([])
+const currentMonthLabel = ref('')
 
 // 构建日期到计划的映射
-const planMap = new Map<string, FoodPlan>()
-aprilFoodPlan.forEach(plan => {
-  planMap.set(plan.date, plan)
-})
+const planMap = ref(new Map<string, FoodPlan>())
+
+function updateMonthData(month: number) {
+  const monthKey = String(month)
+  const data = monthsData[monthKey]
+  if (data) {
+    currentMonthData.value = data.plans || []
+    currentMonthLabel.value = data.monthName || `${month}月`
+  } else {
+    currentMonthData.value = []
+    currentMonthLabel.value = `${month}月`
+  }
+  
+  // 重建映射
+  const newMap = new Map<string, FoodPlan>()
+  currentMonthData.value.forEach(plan => {
+    newMap.set(plan.date, plan)
+  })
+  planMap.value = newMap
+}
+
+// 初始化月份数据
+updateMonthData(props.month || 4)
 
 // 当前显示的年月
 const currentYear = ref(2026)
-const currentMonth = ref(3) // 0-based, 3=4月
+const currentMonth = ref((props.month || 4) - 1) // 0-based
 
 // 选中的日期
 const selectedDate = ref<string | null>(null)
-
-// 提示弹窗
 
 // 星期名称
 const weekDays = ['日', '一', '二', '三', '四', '五', '六']
 
 // 标题
 const currentMonthTitle = computed(() => {
-  return `${currentYear.value}-${currentMonth.value + 1}`
+  return `${currentYear.value}年${currentMonthLabel.value}`
 })
 
 // 宝宝月龄文本
-// @ts-ignore
 const babyAgeText = computed(() => {
-  if (!babyInfo) return ''
-  const startDays = babyInfo.startAgeDays
-  const months = Math.floor(startDays / 30)
-  const days = startDays % 30
-  return `${months}个月${days}天`
+  const monthKey = String(currentMonth.value + 1)
+  const data = monthsData[monthKey]
+  return data?.babyAge || ''
 })
 
 // 获取当月所有日期
@@ -138,7 +177,7 @@ const firstDayOffset = computed(() => {
 
 // 获取某天的计划
 const getPlan = (date: string): FoodPlan | null => {
-  return planMap.get(date) || null
+  return planMap.value.get(date) || null
 }
 
 // 是否是今天
@@ -160,7 +199,7 @@ const getDateNum = (date: string) => {
 
 // 选择日期
 const selectDate = (date: string) => {
-  if (planMap.has(date)) {
+  if (planMap.value.has(date)) {
     selectedDate.value = date
   }
 }
@@ -175,14 +214,13 @@ function formatDate(date: Date): string {
 
 // 导航
 const canPrev = computed(() => {
-  return currentYear.value > 2026 || (currentYear.value === 2026 && currentMonth.value >= 3)
+  return currentYear.value > 2026 || (currentYear.value === 2026 && currentMonth.value > 0)
 })
 
 const canNext = computed(() => {
-  return currentYear.value < 2026 || (currentYear.value === 2026 && currentMonth.value < 3)
+  return currentYear.value < 2026 || (currentYear.value === 2026 && currentMonth.value < 11)
 })
 
-// @ts-ignore
 const prevMonth = () => {
   if (canPrev.value) {
     if (currentMonth.value === 0) {
@@ -191,10 +229,10 @@ const prevMonth = () => {
     } else {
       currentMonth.value--
     }
+    updateMonthData(currentMonth.value + 1)
   }
 }
 
-// @ts-ignore
 const nextMonth = () => {
   if (canNext.value) {
     if (currentMonth.value === 11) {
@@ -203,218 +241,36 @@ const nextMonth = () => {
     } else {
       currentMonth.value++
     }
+    updateMonthData(currentMonth.value + 1)
   }
 }
+
+// 监听月份 prop 变化
+watch(() => props.month, (newMonth) => {
+  if (newMonth !== undefined) {
+    currentMonth.value = newMonth - 1
+    updateMonthData(newMonth)
+  }
+})
+
+// 初始化时默认选中今天（如果今天有计划）
+onMounted(() => {
+  // 如果传入了月份 prop，使用它
+  if (props.month !== undefined) {
+    currentMonth.value = props.month - 1
+    updateMonthData(props.month)
+  }
+  
+  // 检查今天是否有辅食计划，有则选中
+  const today = formatDate(new Date())
+  if (planMap.value.has(today)) {
+    selectedDate.value = today
+  }
+})
 
 const exportPDF = () => {
   window.print()
 }
-
-// // 导出PDF
-// const exportPDF = async () => {
-//   const element = document.querySelector('.calendar-grid') as HTMLElement
-//   const weekHeader = document.querySelector('.week-header') as HTMLElement
-  
-//   if (!element) return
-  
-//   // A4横向尺寸(mm)
-//   const pdfWidth = 297  // A4 landscape width
-//   const pdfHeight = 210 // A4 landscape height
-//   const margin = 10     // margin in mm
-//   const contentWidth = pdfWidth - margin * 2
-//   const contentHeight = pdfHeight - margin * 2
-  
-//   // 创建导出容器 - 固定尺寸确保内容在一页内
-//   const exportContainer = document.createElement('div')
-//   exportContainer.style.cssText = `
-//     position: absolute;
-//     left: -9999px;
-//     top: 0;
-//     width: ${contentWidth * 3.78}px;
-//     background: white;
-//     padding: 0;
-//     font-family: Arial, sans-serif;
-//     overflow: hidden;
-//   `
-  
-//   // 内容容器带padding
-//   const contentWrapper = document.createElement('div')
-//   contentWrapper.style.cssText = `
-//     padding: 15px;
-//     box-sizing: border-box;
-//   `
-  
-//   // 添加标题
-//   const title = document.createElement('div')
-//   title.style.cssText = `
-//     text-align: center;
-//     font-size: 20px;
-//     font-weight: 600;
-//     color: #4A4A4A;
-//     margin-bottom: 4px;
-//   `
-//   title.textContent = '乐乐的辅食日记'
-//   contentWrapper.appendChild(title)
-  
-//   // 添加月份
-//   const monthTitle = document.createElement('div')
-//   monthTitle.style.cssText = `
-//     text-align: center;
-//     font-size: 14px;
-//     color: #8C8C8C;
-//     margin-bottom: 8px;
-//   `
-//   monthTitle.textContent = currentMonthTitle.value
-//   contentWrapper.appendChild(monthTitle)
-  
-//   // 添加星期标题
-//   if (weekHeader) {
-//     const weekHeaderClone = weekHeader.cloneNode(true) as HTMLElement
-//     weekHeaderClone.style.cssText = `
-//       display: grid;
-//       grid-template-columns: repeat(7, 1fr);
-//       background: #EFECE8;
-//       border-radius: 6px 6px 0 0;
-//       border: 1px solid #E5E0D8;
-//       border-bottom: none;
-//       margin-bottom: 0;
-//     `
-//     const weekDays = weekHeaderClone.querySelectorAll('.week-day')
-//     weekDays.forEach(day => {
-//       (day as HTMLElement).style.cssText = `
-//         padding: 6px 2px;
-//         text-align: center;
-//         font-weight: 500;
-//         color: #8C8C8C;
-//         font-size: 12px;
-//       `
-//     })
-//     contentWrapper.appendChild(weekHeaderClone)
-//   }
-  
-//   // 克隆日历网格
-//   const gridClone = element.cloneNode(true) as HTMLElement
-//   gridClone.style.cssText = `
-//     display: grid;
-//     grid-template-columns: repeat(7, 1fr);
-//     border: 1px solid #E5E0D8;
-//     border-top: none;
-//     border-radius: 0 0 6px 6px;
-//     box-shadow: none;
-//     margin-bottom: 0;
-//   `
-  
-//   // 调整单元格样式
-//   const cells = gridClone.querySelectorAll('.calendar-cell')
-//   cells.forEach(cell => {
-//     const cellEl = cell as HTMLElement
-//     cellEl.style.cssText = `
-//       min-height: 75px;
-//       padding: 4px;
-//       border: 1px solid #EDEAE5;
-//       background: #FFFFFF;
-//       display: flex;
-//       flex-direction: column;
-//       box-sizing: border-box;
-//     `
-    
-//     const dateNum = cellEl.querySelector('.cell-date')
-//     if (dateNum) {
-//       (dateNum as HTMLElement).style.cssText = `
-//         font-size: 12px;
-//         font-weight: 500;
-//         margin-bottom: 3px;
-//       `
-//     }
-    
-//     const content = cellEl.querySelector('.cell-content')
-//     if (content) {
-//       (content as HTMLElement).style.cssText = `
-//         font-size: 7px;
-//         line-height: 1.3;
-//         flex: 1;
-//       `
-//     }
-    
-//     const meals = cellEl.querySelectorAll('.meal')
-//     meals.forEach(meal => {
-//       (meal as HTMLElement).style.cssText = `
-//         margin-bottom: 2px;
-//         padding: 2px 3px;
-//         border-radius: 3px;
-//       `
-//     })
-    
-//     const mealTexts = cellEl.querySelectorAll('.meal-text')
-//     mealTexts.forEach(text => {
-//       (text as HTMLElement).style.cssText = `
-//         font-size: 7px;
-//         line-height: 1.2;
-//       `
-//     })
-    
-//     const tip = cellEl.querySelector('.cell-tip')
-//     if (tip) {
-//       (tip as HTMLElement).style.cssText = `
-//         font-size: 6px;
-//         padding: 2px 3px;
-//         border-radius: 3px;
-//       `
-//     }
-//   })
-  
-//   contentWrapper.appendChild(gridClone)
-//   exportContainer.appendChild(contentWrapper)
-//   document.body.appendChild(exportContainer)
-  
-//   try {
-//     await nextTick()
-    
-//     const canvas = await html2canvas(exportContainer, {
-//       scale: 2,
-//       useCORS: true,
-//       backgroundColor: '#ffffff',
-//       logging: false,
-//     })
-    
-//     const imgData = canvas.toDataURL('image/png', 1.0)
-    
-//     const pdf = new jsPDF({
-//       orientation: 'landscape',
-//       unit: 'mm',
-//       format: 'a4'
-//     })
-    
-//     // 按PDF页面比例缩放图片
-//     const imgRatio = canvas.width / canvas.height
-//     const pdfRatio = contentWidth / contentHeight
-    
-//     let drawWidth: number
-//     let drawHeight: number
-    
-//     if (imgRatio > pdfRatio) {
-//       // 图片更宽，按宽度适配
-//       drawWidth = contentWidth
-//       drawHeight = contentWidth / imgRatio
-//     } else {
-//       // 图片更高，按高度适配
-//       drawHeight = contentHeight
-//       drawWidth = contentHeight * imgRatio
-//     }
-    
-//     // 居中放置
-//     const x = margin + (contentWidth - drawWidth) / 2
-//     const y = margin + (contentHeight - drawHeight) / 2
-    
-//     pdf.addImage(imgData, 'PNG', x, y, drawWidth, drawHeight)
-//     pdf.save(`乐乐的辅食日记_${currentMonthTitle.value}.pdf`)
-//   } catch (error) {
-//     console.error('导出PDF失败:', error)
-//     alert('导出PDF失败，请重试')
-//   } finally {
-//     document.body.removeChild(exportContainer)
-//   }
-// }
 </script>
 
 <style scoped>
@@ -434,6 +290,30 @@ const exportPDF = () => {
   justify-content: center;
   margin-bottom: 20px;
   position: relative;
+}
+
+/* 返回按钮 */
+.back-btn {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  color: var(--text-secondary, #8C8C8C);
+  opacity: 0.6;
+  transition: all 0.25s ease;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.back-btn:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-primary, #4A4A4A);
 }
 
 .page-title {
@@ -473,6 +353,37 @@ const exportPDF = () => {
 
 .export-btn svg {
   display: block;
+}
+
+/* 当前日期展示板块 */
+.current-date-section {
+  background: linear-gradient(135deg, rgba(167, 199, 215, 0.15) 0%, rgba(184, 197, 176, 0.15) 100%);
+  padding: 14px 20px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border, #E5E0D8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(74, 74, 74, 0.04);
+}
+
+.date-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.calendar-icon {
+  color: var(--primary, #A7C7D7);
+  flex-shrink: 0;
+}
+
+.date-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-primary, #4A4A4A);
+  letter-spacing: 1px;
 }
 
 /* 头部样式 */
@@ -720,6 +631,15 @@ const exportPDF = () => {
 @media (max-width: 374px) {
   .food-calendar {
     padding: 12px;
+  }
+
+  .current-date-section {
+    padding: 10px 14px;
+    margin-bottom: 14px;
+  }
+
+  .date-text {
+    font-size: 15px;
   }
 
   .month-nav {
