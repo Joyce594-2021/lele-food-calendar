@@ -60,10 +60,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick } from 'vue'
+import { ref, computed } from 'vue'
 import foodPlanData from '../data/food-plan.json'
-import html2canvas from 'html2canvas'
-import { jsPDF } from 'jspdf'
 
 interface FoodPlan {
   date: string
@@ -97,8 +95,6 @@ const currentMonth = ref(3) // 0-based, 3=4月
 const selectedDate = ref<string | null>(null)
 
 // 提示弹窗
-const showTipModal = ref(false)
-const currentTip = ref('')
 
 // 星期名称
 const weekDays = ['日', '一', '二', '三', '四', '五', '六']
@@ -109,6 +105,7 @@ const currentMonthTitle = computed(() => {
 })
 
 // 宝宝月龄文本
+// @ts-ignore
 const babyAgeText = computed(() => {
   if (!babyInfo) return ''
   const startDays = babyInfo.startAgeDays
@@ -185,6 +182,7 @@ const canNext = computed(() => {
   return currentYear.value < 2026 || (currentYear.value === 2026 && currentMonth.value < 3)
 })
 
+// @ts-ignore
 const prevMonth = () => {
   if (canPrev.value) {
     if (currentMonth.value === 0) {
@@ -196,6 +194,7 @@ const prevMonth = () => {
   }
 }
 
+// @ts-ignore
 const nextMonth = () => {
   if (canNext.value) {
     if (currentMonth.value === 11) {
