@@ -30,7 +30,7 @@
             <line x1="3" y1="10" x2="21" y2="10"/>
           </svg>
         </div>
-        <div class="month-name zcool-kuaile-regular">{{year}}年{{ month.name }}</div>
+        <div class="month-name zcool-kuaile-regular">{{ month.name }}</div>
         <!-- <div class="month-plan-count" v-if="month.hasPlan">
           {{ month.planCount }}天记录
         </div>

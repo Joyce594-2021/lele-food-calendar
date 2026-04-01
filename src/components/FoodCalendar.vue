@@ -86,10 +86,10 @@ interface MonthMap {
   [key: string]: MonthData
 }
 
-interface BabyInfo {
-  birthDate: string
-  note: string
-}
+// interface BabyInfo {
+//   birthDate: string
+//   note: string
+// }
 
 const props = defineProps<{
   month?: number
@@ -99,7 +99,7 @@ const emit = defineEmits<{
   'back-to-home': []
 }>()
 
-const babyInfo = (foodPlanData as any).babyInfo as BabyInfo
+// const babyInfo = (foodPlanData as any).babyInfo as BabyInfo
 const monthsData = (foodPlanData as any).months as MonthMap
 
 // 当前显示的月份数据
@@ -144,13 +144,6 @@ const weekDays = ['日', '一', '二', '三', '四', '五', '六']
 // 标题
 const currentMonthTitle = computed(() => {
   return `${currentYear.value}年${currentMonthLabel.value}`
-})
-
-// 宝宝月龄文本
-const babyAgeText = computed(() => {
-  const monthKey = String(currentMonth.value + 1)
-  const data = monthsData[monthKey]
-  return data?.babyAge || ''
 })
 
 // 获取当月所有日期
@@ -210,39 +203,6 @@ function formatDate(date: Date): string {
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
   return `${year}-${month}-${day}`
-}
-
-// 导航
-const canPrev = computed(() => {
-  return currentYear.value > 2026 || (currentYear.value === 2026 && currentMonth.value > 0)
-})
-
-const canNext = computed(() => {
-  return currentYear.value < 2026 || (currentYear.value === 2026 && currentMonth.value < 11)
-})
-
-const prevMonth = () => {
-  if (canPrev.value) {
-    if (currentMonth.value === 0) {
-      currentMonth.value = 11
-      currentYear.value--
-    } else {
-      currentMonth.value--
-    }
-    updateMonthData(currentMonth.value + 1)
-  }
-}
-
-const nextMonth = () => {
-  if (canNext.value) {
-    if (currentMonth.value === 11) {
-      currentMonth.value = 0
-      currentYear.value++
-    } else {
-      currentMonth.value++
-    }
-    updateMonthData(currentMonth.value + 1)
-  }
 }
 
 // 监听月份 prop 变化
